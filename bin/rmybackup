@@ -1,0 +1,19 @@
+#Load the libraries, see if we're local or not for testing
+begin
+  require 'rubygems'
+  require 'rmybackup'
+rescue LoadError
+  require '../lib/rmybackup'
+end
+
+require 'optparse'
+
+OPTIONS = { :config_file => "/etc/rmybackup.conf" }
+
+ARGV.options do |opts|
+  opts.on("-f /etc/rmybackup.conf","--config_file /etc/rmybackup.conf","Set Config File",String) { |OPTIONS[:config_file]| }
+  opts.parse!
+end
+
+
+RMyBackup.new(OPTIONS[:config_file])
