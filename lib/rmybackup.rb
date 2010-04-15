@@ -25,6 +25,7 @@ class RMyBackup
   
   def parse_config
     @config = YAML::load(File.open(@config_file))
+    #Now we need to check the config variables, make sure they're right, sanitize them, etc
     return true
   rescue
     return false
