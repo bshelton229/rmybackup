@@ -21,7 +21,7 @@ ARGV.options do |opts|
 
   #Allow the user to write the sample config file to either the default (no file specified) or to the file they specify
   #on the command line
-  opts.on("-i [config_file location]","--install_config [config_file location]",String) do |ic|
+  opts.on("-i [config_file location]","--install_config [config_file location]","Generates a sample config file",String) do |ic|
     RMyBackup.install_config(ic)
     exit 0
   end
