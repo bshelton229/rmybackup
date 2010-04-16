@@ -29,6 +29,7 @@ class RMyBackup
   def parse_config
     @config = YAML::load(File.open(@config_file))
 
+    #Initialize error array
     @error = Array.new 
     
     #Defaults
