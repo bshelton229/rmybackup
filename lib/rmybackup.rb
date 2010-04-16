@@ -1,7 +1,9 @@
 #Require Yaml
 require 'yaml'
+require 'time'
 
 class RMyBackup
+  
   def initialize(config_file)
     @config_file = config_file
     #if the config has been parsed correctly, run the backups
@@ -11,32 +13,41 @@ class RMyBackup
   private
   #Run the backups, we should have proper validation at this point
   def run_backups
-    puts @config['backup_dir']
-    return true
     #Grab some config variables
     mysql_dump = @config['mysqldump_command']
     backup_dir = @config['backup_dir']
+    gzip = @config['gzip_command']
+    date_string = Time.now.strftime "%m_%d_%Y_%H_%M"
 
-    #Cycle through databases
-    puts "We're going to backup\n--------------------"
+    #Cycle through databases to backup
     @config['databases'].each do |db|
-      puts "#{db}\n"
+      puts "Backing up #{db}\n"
+      system "#{mysql_dump} #{db} |#{gzip} > #{backup_dir}#{db}_#{date_string}.sql.gz"
     end
   end
   
   def parse_config
     @config = YAML::load(File.open(@config_file))
 
-    @error = Array.new
+    @error = Array.new 
     
     #Defaults
     @config['gzip_command'] = "/usr/bin/gzip" if @config['gzip_command'].nil?
     @config['mysqldump_command'] = "/usr/bin/mysqldump" if @config['mysqldump_command'].nil?
+    @config['find_command'] = "/usr/bin/find" if @config['find_command'].nil?
+
     #Fix Slash at the end of the path
     @config['backup_dir'] += "/" unless @config['backup_dir'][-1,1] == "/"
-    #Run Some checks
-    @error << "No Such Backup Directory #{@config['backup_dir']}" unless File.directory? @config['backup_dir']    
 
+    #Run Some checks
+    @error << "No Such Backup Directory #{@config['backup_dir']}" unless File.directory? @config['backup_dir']
+
+    #Check Commands
+    @error << "Can't locate find command: #{@config['find_command']}" unless File.exists? @config['find_command']
+    @error << "Can't locate gzip command: #{@config['gzip_command']}" unless File.exists? @config['gzip_command']
+    @error << "Can't locate mysqldump command: #{@config['mysqldump_command']}" unless File.exists? @config['mysqldump_command']
+
+    #See if we've created any errors, if so, display them and exit
     if @error.empty?
       return true
     else
@@ -44,7 +55,8 @@ class RMyBackup
       exit
     end
   rescue
-    puts "error"
+    @error.each {|e| puts "#{e}\n" }
+    exit
     return false
   end
 end

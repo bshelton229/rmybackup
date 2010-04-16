@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 #Load the libraries, see if we're local or not for testing
 begin
   require 'rubygems'
@@ -9,9 +11,11 @@ end
 require 'optparse'
 
 OPTIONS = { :config_file => "/etc/rmybackup.conf" }
+GEM_VERSION = "0.0.1"
 
 ARGV.options do |opts|
   opts.on("-f /etc/rmybackup.conf","--config_file /etc/rmybackup.conf","Set Config File",String) { |OPTIONS[:config_file]| }
+  opts.on("-v","--version","Outputs version") { puts "Version - #{GEM_VERSION}"; exit }
   opts.parse!
 end
 
