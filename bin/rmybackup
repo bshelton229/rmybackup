@@ -12,11 +12,14 @@ require 'optparse'
 
 #Set some globals
 OPTIONS = { :config_file => "/etc/rmybackup.conf" }
-GEM_VERSION = "0.0.4"
+GEM_VERSION = "0.0.5"
 
 #Process the command line arguments
 ARGV.options do |opts|
-  opts.on("-f /etc/rmybackup.conf","--config_file /etc/rmybackup.conf","Set Config File",String) { |OPTIONS[:config_file]| }
+  #Set the config file
+  opts.on("-f /etc/rmybackup.conf","--config_file /etc/rmybackup.conf","Set Config File",String) do |o| 
+    OPTIONS[:config_file] = o 
+  end
   opts.on("-v","--version","Outputs version") { puts "Version - #{GEM_VERSION}"; exit }
 
   #Allow the user to write the sample config file to either the default (no file specified) or to the file they specify
