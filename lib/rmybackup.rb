@@ -1,12 +1,11 @@
-#Require Yaml
 require 'yaml'
 require 'time'
 
 class RMyBackup
-  
+    
   def initialize(config_file)
     @config_file = config_file
-    #if the config has been parsed correctly, run the backups
+    #if the config file passes, run the backups
     run_backups if parse_config
   end
   
@@ -22,10 +21,11 @@ class RMyBackup
     #Cycle through databases to backup
     @config['databases'].each do |db|
       puts "Backing up #{db}\n"
-      system "#{mysql_dump} #{db} |#{gzip} > #{backup_dir}#{db}_#{date_string}.sql.gz"
+      system "#{mysql_dump} #{db} |#{gzip} > #{backup_dir}/#{db}_#{date_string}.sql.gz"
     end
   end
   
+  #Parse the config YAML file
   def parse_config
     @config = YAML::load(File.open(@config_file))
 
@@ -36,13 +36,11 @@ class RMyBackup
     @config['mysqldump_command'] = "/usr/bin/mysqldump" if @config['mysqldump_command'].nil?
     @config['find_command'] = "/usr/bin/find" if @config['find_command'].nil?
 
-    #Fix Slash at the end of the path
-    @config['backup_dir'] += "/" unless @config['backup_dir'][-1,1] == "/"
-
-    #Run Some checks
+    #Backup dir validation
     if not File.directory? @config['backup_dir']
       @error << "No Such Backup Directory #{@config['backup_dir']}"
     else
+      @config['backup_dir'] = File.expand_path @config['backup_dir']
       if not File.writable? @config['backup_dir']
         @error << "Can't write to the backup directory - #{@config['backup_dir']}"
       end
@@ -58,11 +56,12 @@ class RMyBackup
       return true
     else
       @error.each {|e| puts "#{e}\n" }
-      exit
+      exit 1
     end
+  #Rescue anything by displaying errors if we have them and exiting 1
   rescue
     @error.each {|e| puts "#{e}\n" }
-    exit
+    exit 1
     return false
   end
 end
