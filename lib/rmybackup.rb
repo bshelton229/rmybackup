@@ -40,7 +40,13 @@ class RMyBackup
     @config['backup_dir'] += "/" unless @config['backup_dir'][-1,1] == "/"
 
     #Run Some checks
-    @error << "No Such Backup Directory #{@config['backup_dir']}" unless File.directory? @config['backup_dir']
+    if not File.directory? @config['backup_dir']
+      @error << "No Such Backup Directory #{@config['backup_dir']}"
+    else
+      if not File.writable? @config['backup_dir']
+        @error << "Can't write to the backup directory - #{@config['backup_dir']}"
+      end
+    end
 
     #Check Commands
     @error << "Can't locate find command: #{@config['find_command']}" unless File.exists? @config['find_command']
