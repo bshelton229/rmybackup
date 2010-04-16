@@ -18,6 +18,10 @@ GEM_VERSION = "0.0.3"
 ARGV.options do |opts|
   opts.on("-f /etc/rmybackup.conf","--config_file /etc/rmybackup.conf","Set Config File",String) { |OPTIONS[:config_file]| }
   opts.on("-v","--version","Outputs version") { puts "Version - #{GEM_VERSION}"; exit }
+  opts.on("-i [config_file location]","--install_config [config_file location]",String) do |ic|
+    puts "Install it #{ic}"
+    exit 0
+  end
   opts.parse!
 end
 
