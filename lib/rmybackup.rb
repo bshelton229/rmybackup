@@ -28,22 +28,17 @@ class RMyBackup
 #Backup Directory
 backup_dir: /Users/bshelton/mysql_tmp/
 
-database_connection:
-  host: localhost
-  user: root
-  password: batman
-
 #Databases to back up
 databases: [
-  bercilak,
-  etrack,
-  bbpress
+  databases_here,
+  in,
+  list
 ]
 
-#Command Locations TEST
-mysqldump_command: /usr/local/mysql/bin/mysqldump
-gzip_command: /usr/bin/gzip
-find_command: /usr/bin/find
+#Command Locations
+#mysqldump_command: /usr/local/mysql/bin/mysqldump
+#gzip_command: /usr/bin/gzip
+#find_command: /usr/bin/find
 CONFIG_FILE
       
     puts "Installing #{file}"
