@@ -13,6 +13,47 @@ class RMyBackup
   def self.install_config(file=false)
     #Default the file location
     file = "/etc/rmybackup.conf" if not file
+    file = File.expand_path(file)
+
+    if File.exists? file
+      puts "The file already exists, do you want to overwrite it? (Y/Yes):"
+      STDOUT.flush
+      answer = gets.chomp
+      exit 1 unless answer.upcase == "Y" or answer.upcase == "YES"
+    end
+
+    config_file = <<CONFIG_FILE
+#Configuration File in YAML format
+
+#Backup Directory
+backup_dir: /Users/bshelton/mysql_tmp/
+
+database_connection:
+  host: localhost
+  user: root
+  password: batman
+
+#Databases to back up
+databases: [
+  bercilak,
+  etrack,
+  bbpress
+]
+
+#Command Locations TEST
+mysqldump_command: /usr/local/mysql/bin/mysqldump
+gzip_command: /usr/bin/gzip
+find_command: /usr/bin/find
+CONFIG_FILE
+      
+    puts "Installing #{file}"
+
+    begin
+      File.open(file,'w') {|f| f.write(config_file) }
+    rescue
+      puts "Can't write to - #{file}"
+    end
+    exit 0
   end
   
   private
