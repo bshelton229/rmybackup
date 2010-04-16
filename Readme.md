@@ -3,7 +3,7 @@
 RMyBackup was created to solve a simple problem I had, and is hopefully useful to somebody else out there. It is a quick way to backup up specified mysql databases using mysqldump. It writes a gzipped .sql file using a date/time naming convention to a specified directory.
 
 ### To Install
-    gem install rmybackup
+    # gem install rmybackup
     
 ## Usage
 
@@ -12,10 +12,10 @@ The gem will install an rmybackup binary. RMyBackup will read its configuration 
 Right now the script relies on your [mysqldump] configuration in either /etc/my.cnf or the user's ~/.my.cnf. I'm hoping to change this soon, allowing you to specify the host, user, password, and socket in the configuration file.
 
     # example my.cnf
-    #
-    # [mysqldump]
-    # user = root
-    # password = roots_password
+    
+    [mysqldump]
+    user = root
+    password = roots_password
     
 
 Once everything is set up correctly in the config file, and mysqldump is able to operate using credentials specified in the appropriate my.cnf file, you should simply be able to run the rmybackup command.
