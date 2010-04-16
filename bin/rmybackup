@@ -19,5 +19,10 @@ ARGV.options do |opts|
   opts.parse!
 end
 
+if not File.exists? OPTIONS[:config_file]
+  puts "Unable to read the configuration file - #{OPTIONS[:config_file]}"
+  exit
+end
+
 #Run
 RMyBackup.new(OPTIONS[:config_file])
