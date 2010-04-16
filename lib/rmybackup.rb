@@ -9,6 +9,12 @@ class RMyBackup
     run_backups if parse_config
   end
   
+  #Install a baseline config file from the template
+  def self.install_config(file=false)
+    #Default the file location
+    file = "/etc/rmybackup.conf" if not file
+  end
+  
   private
   #Run the backups, we should have proper validation at this point
   def run_backups
