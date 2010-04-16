@@ -1,6 +1,7 @@
 require 'yaml'
 require 'time'
 
+#The main RMyBackup library
 class RMyBackup
     
   def initialize(config_file)
@@ -28,24 +29,32 @@ class RMyBackup
 #Backup Directory
 backup_dir: /Users/bshelton/mysql_tmp/
 
+#Databases to backup
+#This is an array of databases that are to be backed ups
+# i.e.
+# databases: [
+#   test,
+#   mysql,
+#   important_db
+# ]
+
 #Databases to back up
 databases: [
-  databases_here,
-  in,
-  list
+  test
 ]
 
 #Command Locations
+#You can override where to find the needed system commands, default locations are prefixed with /usr/bin/
+
 #mysqldump_command: /usr/local/mysql/bin/mysqldump
 #gzip_command: /usr/bin/gzip
 #find_command: /usr/bin/find
 CONFIG_FILE
-      
-    puts "Installing #{file}"
 
     begin
       File.open(file,'w') {|f| f.write(config_file) }
-    rescue
+      puts "Installing #{file}"
+    rescue Errno::EACCES
       puts "Can't write to - #{file}"
     end
     exit 0

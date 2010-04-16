@@ -18,6 +18,9 @@ GEM_VERSION = "0.0.3"
 ARGV.options do |opts|
   opts.on("-f /etc/rmybackup.conf","--config_file /etc/rmybackup.conf","Set Config File",String) { |OPTIONS[:config_file]| }
   opts.on("-v","--version","Outputs version") { puts "Version - #{GEM_VERSION}"; exit }
+
+  #Allow the user to write the sample config file to either the default (no file specified) or to the file they specify
+  #on the command line
   opts.on("-i [config_file location]","--install_config [config_file location]",String) do |ic|
     RMyBackup.install_config(ic)
     exit 0
