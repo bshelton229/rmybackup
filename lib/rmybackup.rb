@@ -11,7 +11,8 @@ class RMyBackup
   private
   #Run the backups, we should have proper validation at this point
   def run_backups
-
+    puts @config['backup_dir']
+    return true
     #Grab some config variables
     mysql_dump = @config['mysqldump_command']
     backup_dir = @config['backup_dir']
@@ -25,9 +26,25 @@ class RMyBackup
   
   def parse_config
     @config = YAML::load(File.open(@config_file))
-    #Now we need to check the config variables, make sure they're right, sanitize them, etc
-    return true
+
+    @error = Array.new
+    
+    #Defaults
+    @config['gzip_command'] = "/usr/bin/gzip" if @config['gzip_command'].nil?
+    @config['mysqldump_command'] = "/usr/bin/mysqldump" if @config['mysqldump_command'].nil?
+    #Fix Slash at the end of the path
+    @config['backup_dir'] += "/" unless @config['backup_dir'][-1,1] == "/"
+    #Run Some checks
+    @error << "No Such Backup Directory #{@config['backup_dir']}" unless File.directory? @config['backup_dir']    
+
+    if @error.empty?
+      return true
+    else
+      @error.each {|e| puts "#{e}\n" }
+      exit
+    end
   rescue
+    puts "error"
     return false
   end
 end
