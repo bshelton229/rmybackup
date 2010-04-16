@@ -32,11 +32,6 @@ The default location for the configuration file is /etc/rmybackup.conf, formatte
     #Backup Directory
     backup_dir: /Users/bshelton/mysql_tmp
 
-    database_connection:
-      host: localhost
-      user: root
-      password: batman
-
     #Databases to back up
     databases: [
       bercilak,
