@@ -9,9 +9,9 @@ RMyBackup was created to solve a simple problem I had, and is hopefully useful t
 
 The gem will install an rmybackup binary. RMyBackup will read its configuration from /etc/rmybackup.conf (a sample configuration file is shown below). RMyBackup will backup the specified databases in the databases: [] list in the configuration file.
 
-To generate a sample config file, use the --config_file option. Default location is /etc/rmybackup.conf, or you can specify your own location.
+To generate a sample config file, use the --instal_config option. Default location is /etc/rmybackup.conf, or you can specify your own location.
 
-    # rmybackup --config_file /etc/rmybackup.conf
+    # rmybackup --install_config /etc/rmybackup.conf
 
 Right now the script relies on your [mysqldump] configuration in either /etc/my.cnf or the user's ~/.my.cnf. I'm hoping to change this soon, allowing you to specify the host, user, password, and socket in the configuration file.
 
