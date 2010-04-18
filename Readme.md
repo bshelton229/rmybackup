@@ -39,7 +39,6 @@ The default location for the configuration file is /etc/rmybackup.conf, formatte
     #Databases to back up
     databases: [
       bercilak,
-      etrack,
       bbpress
     ]
 
