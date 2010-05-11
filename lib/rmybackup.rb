@@ -1,6 +1,7 @@
 require 'yaml'
 require 'time'
-require 'rmybackup/config'
+require File.expand_path('../rmybackup/config',__FILE__)
+require File.expand_path('../rmybackup/purge_files',__FILE__)
 
 module RMyBackup
   class Base
@@ -13,6 +14,7 @@ module RMyBackup
     private
     #Run the backups, we should have proper validation at this point
     def run_backups
+      
       #Grab some config variables
       mysql_dump = @config['mysqldump_command']
       backup_dir = @config['backup_dir']
@@ -24,6 +26,8 @@ module RMyBackup
         puts "Backing up #{db}\n"
         system "#{mysql_dump} #{db} |#{gzip} > #{backup_dir}/#{db}_#{date_string}.sql.gz"
       end
+      
+      RMyBackup.purge_files(@config['backup_dir'])
     end
   
     #Parse the config YAML file
