@@ -1,0 +1,20 @@
+#Backup Directory
+backup_dir: /Users/bshelton/mysql_tmp/
+
+#Databases to backup
+#This is an array of databases that are to be backed ups
+# i.e.
+# databases: [
+#   test,
+#   mysql,
+#   important_db
+# ]
+
+#Databases to back up
+databases: [ test ]
+
+#Command Locations
+#You can override where to find the needed system commands, default locations are prefixed with /usr/bin/
+
+#mysqldump_command: /usr/local/mysql/bin/mysqldump
+#gzip_command: /usr/bin/gzip

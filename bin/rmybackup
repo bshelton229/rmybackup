@@ -10,9 +10,16 @@ end
 
 require 'optparse'
 
-#Set some globals
-OPTIONS = { :config_file => "/etc/rmybackup.conf" }
-GEM_VERSION = "0.0.5"
+#GLOBALS
+
+#Default to local config file if it exists
+if File.exists?(File.expand_path("~/.rmybackup.conf"))
+  OPTIONS = { :config_file => File.expand_path("~/.rmybackup.conf") }
+else
+  OPTIONS = { :config_file => "/etc/rmybackup.conf" }
+end
+
+GEM_VERSION = "0.1.0"
 
 #Process the command line arguments
 ARGV.options do |opts|
@@ -20,6 +27,8 @@ ARGV.options do |opts|
   opts.on("-f /etc/rmybackup.conf","--config_file /etc/rmybackup.conf","Set Config File",String) do |o| 
     OPTIONS[:config_file] = o 
   end
+  
+  #Version
   opts.on("-v","--version","Outputs version") { puts "Version - #{GEM_VERSION}"; exit }
 
   #Allow the user to write the sample config file to either the default (no file specified) or to the file they specify
@@ -28,6 +37,7 @@ ARGV.options do |opts|
     RMyBackup.install_config(ic)
     exit 0
   end
+  
   opts.parse!
 end
 
@@ -38,4 +48,4 @@ if not File.exists? OPTIONS[:config_file]
 end
 
 #Run
-RMyBackup.new(OPTIONS[:config_file])
+RMyBackup::Base.new(OPTIONS[:config_file])
