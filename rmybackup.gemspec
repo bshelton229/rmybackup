@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = %q{rmybackup}
   s.version = "0.1.0"
-  s.date = %q{2010-04-15}
+  s.date = %q{2010-05-11}
   s.authors = ["Bryan Shelton"]
   s.email = %q{bryan@sheltonopensolutions.com}
   s.summary = %q{Ruby Mysql Backup Script}
