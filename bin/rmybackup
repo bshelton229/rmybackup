@@ -1,17 +1,11 @@
 #!/usr/bin/env ruby
 
 #Load our libraries, if we can't load them from the gem, assume we're running from source
-begin
-  require 'rubygems'
-  require 'rmybackup'
-rescue LoadError
-  require '../lib/rmybackup'
-end
-
+require 'rubygems'
+require 'rmybackup'
 require 'optparse'
 
 #GLOBALS
-
 #Default to local config file if it exists
 if File.exists?(File.expand_path("~/.rmybackup.conf"))
   OPTIONS = { :config_file => File.expand_path("~/.rmybackup.conf") }
@@ -19,7 +13,7 @@ else
   OPTIONS = { :config_file => "/etc/rmybackup.conf" }
 end
 
-GEM_VERSION = "0.1.0"
+GEM_VERSION = "0.1.5"
 
 #Process the command line arguments
 ARGV.options do |opts|

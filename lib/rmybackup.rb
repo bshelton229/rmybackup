@@ -27,7 +27,8 @@ module RMyBackup
         system "#{mysql_dump} #{db} |#{gzip} > #{backup_dir}/#{db}_#{date_string}.sql.gz"
       end
       
-      RMyBackup.purge_files(@config['backup_dir'])
+      #Purges after x days
+      RMyBackup.purge_days(@config['backup_dir'],@config['remove_after'])
     end
   
     #Parse the config YAML file
@@ -41,6 +42,7 @@ module RMyBackup
       @config['gzip_command'] = "/usr/bin/gzip" if @config['gzip_command'].nil?
       @config['mysqldump_command'] = "/usr/bin/mysqldump" if @config['mysqldump_command'].nil?
       @config['find_command'] = "/usr/bin/find" if @config['find_command'].nil?
+      @config['remove_after'] = @config['remove_after'] || false
 
       #Backup dir validation
       if not File.directory? @config['backup_dir']
