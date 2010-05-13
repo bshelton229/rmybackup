@@ -13,7 +13,7 @@ else
   OPTIONS = { :config_file => "/etc/rmybackup.conf" }
 end
 
-GEM_VERSION = "0.1.5"
+GEM_VERSION = "0.1.2"
 
 #Process the command line arguments
 ARGV.options do |opts|

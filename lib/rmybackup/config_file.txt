@@ -1,4 +1,4 @@
-backup_dir: /Users/bshelton/mysql_tmp/
+backup_dir: /Users/username/mysql_backups/
 remove_after: 7
 
 #Databases to back up

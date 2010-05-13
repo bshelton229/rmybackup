@@ -31,7 +31,7 @@ Once everything is set up correctly in the config file, and mysqldump is able to
 
 The default location for the configuration file is /etc/rmybackup.conf then ~/.rmybacukp.conf, it's formatted in YAML. You can specify a different config file on the command line using the --config-file (-f) option.
 
-    backup_dir: /Users/bshelton/mysql_tmp
+    backup_dir: /Users/username/mysql_backups/
     #Number of days to keep backups
     remove_after: 7
 
