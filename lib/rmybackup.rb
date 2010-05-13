@@ -1,6 +1,6 @@
 require 'yaml'
 require 'time'
-require File.expand_path('../rmybackup/config',__FILE__)
+require File.expand_path('../rmybackup/install_config',__FILE__)
 require File.expand_path('../rmybackup/purge_files',__FILE__)
 
 module RMyBackup

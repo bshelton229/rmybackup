@@ -2,11 +2,19 @@ module RMyBackup
   #Install a baseline config file from the template
   def self.install_config(file=false)
     #Default the file location
-    file = "/etc/rmybackup.conf" if not file
+    if not file
+      if File.writable_real?("/etc/rmybackup.conf")
+        file = "/etc/rmybackup.conf"
+      else
+        file = "~/.rmybackup.conf"
+      end
+    end
+    
+    #Expand the path
     file = File.expand_path(file)
-
+    
     if File.exists? file
-      puts "The file already exists, do you want to overwrite it? (Y/Yes):"
+      puts "#{file} already exists, do you want to overwrite it? (Y/n):"
       STDOUT.flush
       answer = gets.chomp
       exit 1 unless answer.upcase == "Y" or answer.upcase == "YES"

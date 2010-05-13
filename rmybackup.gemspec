@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   "lib/rmybackup.rb",
    "Readme.md",
    "lib/rmybackup/config_file.txt",
-   "lib/rmybackup/config.rb",
+   "lib/rmybackup/install_config.rb",
    "lib/rmybackup/purge_files.rb"
   ]
   s.require_path = 'lib'
