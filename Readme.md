@@ -31,15 +31,26 @@ Once everything is set up correctly in the config file, and mysqldump is able to
 
 The default location for the configuration file is /etc/rmybackup.conf then ~/.rmybacukp.conf, it's formatted in YAML. You can specify a different config file on the command line using the --config-file (-f) option.
 
+    ---
     backup_dir: /Users/username/mysql_backups/
-    #Number of days to keep backups
     remove_after: 7
 
+    #Database
+    username: root
+    password: password
+    host: localhost
+
+    #If this is set to true, no --user --password or --host switches will be passed to
+    #mysqldump. You will need to have credentials within /etc/my.cnf or ~/.my.cnf
+    use_mycnf_credentials: false
+
     #Databases to back up
-    databases: [ test2, test3 ]
+    skip_databases: [ mysql, test, information_schema ]
 
     #Command Locations
-    mysqldump_command: /usr/local/mysql/bin/mysqldump
-    gzip_command: /usr/bin/gzip
+    #You can override where to find the needed system commands, default locations are prefixed with /usr/bin/
+
+    #mysqldump_command: /usr/local/mysql/bin/mysqldump
+    #gzip_command: /usr/bin/gzip
     
 If mysqldump_command, or gzip_command are left out, they will default to finding the applications in /usr/bin
