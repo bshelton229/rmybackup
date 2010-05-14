@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{rmybackup}
-  s.version = "0.1.2"
+  s.version = "0.2.0"
   s.date = %q{2010-05-13}
   s.authors = ["Bryan Shelton"]
   s.email = %q{bryan@sheltonopensolutions.com}

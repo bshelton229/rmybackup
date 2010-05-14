@@ -19,29 +19,38 @@ module RMyBackup
       
       #Grab some config variables
       mysql_dump = @config['mysqldump_command']
-      backup_dir = @config['backup_dir']
+      backup_root = @config['backup_dir']
       gzip = @config['gzip_command']
       date_string = Time.now.strftime "%m_%d_%Y_%H_%M"
 
+      
       #Cycle through databases to backup
-      @config['databases'].each do |db|
+      get_databases.each do |db|
+        backup_dir = File.expand_path("#{backup_root}/#{db}")
+        Dir.mkdir(backup_dir) if not File.exists?(backup_dir)
+
         puts "Backing up #{db}\n"
-        system "#{mysql_dump} #{db} |#{gzip} > #{backup_dir}/#{db}_#{date_string}.sql.gz"
+        system "#{mysql_dump} --user=#{@config['username']} --password=#{@config['password']} --host=#{@config['host']} #{db} |#{gzip} > #{backup_dir}/#{db}_#{date_string}.sql.gz"
+
+        #Purge after x days
+        RMyBackup.purge_days(backup_dir,@config['remove_after'])
       end
       
-      #Purges after x days
-      RMyBackup.purge_days(@config['backup_dir'],@config['remove_after'])
+
     end
     
     #Get Databases from MySQL
     def get_databases
-      dbc = Mysql.real_connect('localhost','root','batman')
+      dbc = Mysql.real_connect(@config['host'],@config['username'],@config['password'])
       res = dbc.query('SHOW DATABASES;')
       databases = []
       res.each_hash do |db|
         databases << db['Database']
       end
-      return databases
+      return databases - @config['skip_databases']
+    rescue
+      puts "There was a problem connection to the mysql server"
+      exit 0
     end
   
     #Parse the config YAML file
@@ -56,6 +65,11 @@ module RMyBackup
       @config['mysqldump_command'] = "/usr/bin/mysqldump" if @config['mysqldump_command'].nil?
       @config['find_command'] = "/usr/bin/find" if @config['find_command'].nil?
       @config['remove_after'] = @config['remove_after'] || false
+
+      #Database Config
+      @config['username'] = @config['username'] || false
+      @config['password'] = @config['password'] || false
+      @config['host'] = @config['host'] || false
 
       #Backup dir validation
       if not File.directory? @config['backup_dir']
