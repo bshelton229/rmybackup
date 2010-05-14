@@ -8,22 +8,22 @@ require 'optparse'
 #GLOBALS
 #Default to local config file if it exists
 if File.exists?(File.expand_path("~/.rmybackup.conf"))
-  OPTIONS = { :config_file => File.expand_path("~/.rmybackup.conf") }
+  options = { :config_file => File.expand_path("~/.rmybackup.conf") }
 else
-  OPTIONS = { :config_file => "/etc/rmybackup.conf" }
+  options = { :config_file => "/etc/rmybackup.conf" }
 end
 
-GEM_VERSION = "0.2.0"
+gem_version = RMyBackup::GEM_VERSION
 
 #Process the command line arguments
 ARGV.options do |opts|
   #Set the config file
   opts.on("-f /etc/rmybackup.conf","--config-file /etc/rmybackup.conf","Set Config File",String) do |o| 
-    OPTIONS[:config_file] = o 
+    options[:config_file] = o 
   end
   
   #Version
-  opts.on("-v","--version","Outputs version") { puts "Version - #{GEM_VERSION}"; exit }
+  opts.on("-v","--version","Outputs version") { puts "Version - #{gem_version}"; exit }
 
   #Allow the user to write the sample config file to either the default (no file specified) or to the file they specify
   #on the command line
@@ -36,10 +36,10 @@ ARGV.options do |opts|
 end
 
 #If the config file doesn't exist, warn and exit
-if not File.exists? OPTIONS[:config_file]
-  puts "Unable to read the configuration file - #{OPTIONS[:config_file]}"
+if not File.exists? options[:config_file]
+  puts "Unable to read the configuration file - #{options[:config_file]}"
   exit
 end
 
 #Run
-RMyBackup::Base.new(OPTIONS[:config_file])
+RMyBackup::Base.new(options[:config_file])

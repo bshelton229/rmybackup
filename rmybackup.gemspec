@@ -1,6 +1,9 @@
+$:.unshift File.expand_path('../lib',__FILE__)
+require 'rmybackup'
+
 Gem::Specification.new do |s|
   s.name = %q{rmybackup}
-  s.version = "0.2.0"
+  s.version = RMyBackup::GEM_VERSION
   s.date = %q{2010-05-13}
   s.authors = ["Bryan Shelton"]
   s.email = %q{bryan@sheltonopensolutions.com}
@@ -16,4 +19,5 @@ Gem::Specification.new do |s|
    "lib/rmybackup/purge_files.rb"
   ]
   s.require_path = 'lib'
+  s.add_dependency('mysql')
 end
