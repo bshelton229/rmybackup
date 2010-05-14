@@ -52,7 +52,7 @@ module RMyBackup
       end
       return databases - @config['skip_databases']
     rescue
-      puts "There was a problem connection to the mysql server"
+      puts "There was a problem connecting to the mysql server"
       exit 0
     end
   
