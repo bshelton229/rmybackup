@@ -1,28 +1,28 @@
 # RMyBackup
 
-RMyBackup was created to solve a simple problem I had, and is hopefully useful to somebody else out there. RMyBackup is a quick way to backup up specified mysql databases using mysqldump. It writes a gzipped .sql file using a date/time naming convention to a specified directory.
+RMyBackup was created to solve a simple problem I had, and is hopefully useful to somebody else out there. RMyBackup is a quick way to backup up your mysql databases using mysqldump. It writes a gzipped .sql file using a date/time naming convention to a specified directory.
 
 ### To Install
     # gem install rmybackup
     
 ## Usage
 
-The gem will install an rmybackup binary. RMyBackup will read its configuration from ~/.rmybackup.conf or /etc/rmybackup.conf (a sample configuration file is shown below). The .rmybackup.conf file in your home folder will be used if present, next it rmybackup will look for /etc/rmybackup. You may also specify an alternate config file on the command line using rmybackup --config-file /alternate/config/file. RMyBackup will backup the specified databases in the databases: [] list in the configuration file.
+The gem will install an rmybackup binary. RMyBackup will read its configuration from ~/.rmybackup.conf or /etc/rmybackup.conf (a sample configuration file is shown below). The .rmybackup.conf file in your home folder will be used if present, next rmybackup will look for /etc/rmybackup. You may also specify an alternate config file on the command line using rmybackup --config-file /alternate/config/file. RMyBackup will backup all databases excluding the databases listed in the skip_databases: [] list in the configuration file.
 
 To generate a sample config file, use the --instal-config option. Default location is /etc/rmybackup.conf, or if we can't write to /etc, ~/.rmybacukp.conf.
 
     # rmybackup --install-config [/config/location]
 
-Right now the script relies on your [mysqldump] configuration in either /etc/my.cnf or the user's ~/.my.cnf. I'm hoping to change this soon, allowing you to specify the host, user, password, and socket in the configuration file.
+If use_mycnf_credentials is set to true in the config file, mysqldump will not be passed --user, --password, or --host based on the values in the config file. The script will rely on your [mysqldump] configuration in either /etc/my.cnf or the user's ~/.my.cnf. This is more secure if running on a shared server.
 
-    # example my.cnf
+    # example my.cnf or ~/.my.cnf
     
     [mysqldump]
     user = root
     password = roots_password
     
 
-Once everything is set up correctly in the config file, and mysqldump is able to operate using credentials specified in the appropriate my.cnf file, you should simply be able to run the rmybackup command.
+Once everything is set up, simply run the rmybackup command. It will connect to the mysql server using the values in your config file and back up your databases.
 
     # rmybackup
 
