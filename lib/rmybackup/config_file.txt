@@ -8,7 +8,7 @@ password: password
 host: localhost
 
 #Databases to back up
-skip_databases: [ mysql, test ]
+skip_databases: [ mysql, test, information_schema ]
 
 #Command Locations
 #You can override where to find the needed system commands, default locations are prefixed with /usr/bin/
