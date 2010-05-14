@@ -1,10 +1,14 @@
+---
 backup_dir: /Users/username/mysql_backups/
 remove_after: 7
 
-#Databases to back up
-#databases: [ test, test2 ]
+#Database
+username: root
+password: password
+host: localhost
 
-databases: []
+#Databases to back up
+skip_databases: [ mysql, test ]
 
 #Command Locations
 #You can override where to find the needed system commands, default locations are prefixed with /usr/bin/
