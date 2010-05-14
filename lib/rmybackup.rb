@@ -32,14 +32,19 @@ module RMyBackup
         backup_dir = File.expand_path("#{backup_root}/#{db}")
         Dir.mkdir(backup_dir) if not File.exists?(backup_dir)
 
+        #Decide if we use my.cnf or creds on cli
+        if @config['use_mycnf_credentials']
+          cred_string = " --user=#{@config['username']} --password=#{@config['password']} --host=#{@config['host']}"
+        else
+          cred_string = ''
+        end
+        
         puts "Backing up #{db}\n"
-        system "#{mysql_dump} --user=#{@config['username']} --password=#{@config['password']} --host=#{@config['host']} #{db} |#{gzip} > #{backup_dir}/#{db}_#{date_string}.sql.gz"
-
+        system "#{mysql_dump}#{cred_string} #{db} |#{gzip} > #{backup_dir}/#{db}_#{date_string}.sql.gz"
+        
         #Purge after x days
         RMyBackup.purge_days(backup_dir,@config['remove_after'])
       end
-      
-
     end
     
     #Get Databases from MySQL
@@ -68,6 +73,8 @@ module RMyBackup
       @config['mysqldump_command'] = "/usr/bin/mysqldump" if @config['mysqldump_command'].nil?
       @config['find_command'] = "/usr/bin/find" if @config['find_command'].nil?
       @config['remove_after'] = @config['remove_after'] || false
+
+      @config['use_mycnf_credentials'] = @config['use_mycnf_credentials'] ? true : false
 
       #Database Config
       @config['username'] = @config['username'] || false
