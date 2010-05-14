@@ -1,5 +1,7 @@
 require 'yaml'
 require 'time'
+require 'mysql'
+
 require File.expand_path('../rmybackup/install_config',__FILE__)
 require File.expand_path('../rmybackup/purge_files',__FILE__)
 
@@ -29,6 +31,17 @@ module RMyBackup
       
       #Purges after x days
       RMyBackup.purge_days(@config['backup_dir'],@config['remove_after'])
+    end
+    
+    #Get Databases from MySQL
+    def get_databases
+      dbc = Mysql.real_connect('localhost','root','batman')
+      res = dbc.query('SHOW DATABASES;')
+      databases = []
+      res.each_hash do |db|
+        databases << db['Database']
+      end
+      return databases
     end
   
     #Parse the config YAML file
