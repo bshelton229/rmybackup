@@ -7,7 +7,7 @@ require File.expand_path('../rmybackup/purge_files',__FILE__)
 
 module RMyBackup
 
-  GEM_VERSION = "0.2.0"
+  GEM_VERSION = "0.2.1"
   
   class Base
     def initialize(config_file)
@@ -34,9 +34,9 @@ module RMyBackup
 
         #Decide if we use my.cnf or creds on cli
         if @config['use_mycnf_credentials']
-          cred_string = " --user=#{@config['username']} --password=#{@config['password']} --host=#{@config['host']}"
-        else
           cred_string = ''
+        else
+          cred_string = " --user=#{@config['username']} --password=#{@config['password']} --host=#{@config['host']}"
         end
         
         puts "Backing up #{db}\n"
