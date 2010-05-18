@@ -7,7 +7,7 @@ require File.expand_path('../rmybackup/purge_files',__FILE__)
 
 module RMyBackup
 
-  GEM_VERSION = "0.2.1"
+  GEM_VERSION = "0.2.5dev"
   
   class Base
     def initialize(config_file)
