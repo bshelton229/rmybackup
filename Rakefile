@@ -1,7 +1,7 @@
 #RakeFile
 $:.unshift File.expand_path('../lib',__FILE__)
 require 'rmybackup'
-require 'rmybackup/sync'
+require 'rmybackup/backup_sync'
 
 #Used for testing
 task :run_backups do
