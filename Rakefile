@@ -3,11 +3,12 @@ $:.unshift File.expand_path('../lib',__FILE__)
 require 'rmybackup'
 require 'rmybackup/backup_sync'
 
-#Used for testing
+#Run the backups using the config file in your home folder
 task :run_backups do
   RMyBackup::Base.new(File.expand_path("~/.rmybackup.conf"))
 end
 
-task :btest do
-  RMyBackup.bt
+#Version
+task :version do
+  puts RMyBackup::GEM_VERSION
 end
