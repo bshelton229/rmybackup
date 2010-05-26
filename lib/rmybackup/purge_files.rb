@@ -14,4 +14,8 @@ module RMyBackup
       end
     end
   end
+
+  def self.purge_number(path,number=false)
+    #Only keep x backups
+  end
 end
