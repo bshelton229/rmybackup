@@ -44,6 +44,7 @@ module RMyBackup
         
         #Purge after x days
         RMyBackup.purge_days(backup_dir,@config['remove_after'])
+        RMyBackup.purge_number(backup_dir,@config['only_keep'])
       end
     end
     
@@ -73,6 +74,7 @@ module RMyBackup
       @config['mysqldump_command'] = "/usr/bin/mysqldump" if @config['mysqldump_command'].nil?
       @config['find_command'] = "/usr/bin/find" if @config['find_command'].nil?
       @config['remove_after'] = @config['remove_after'] || false
+      @config['only_keep'] = @config['only_keep'] || false
 
       @config['use_mycnf_credentials'] = @config['use_mycnf_credentials'] ? true : false
 

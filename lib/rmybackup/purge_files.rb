@@ -16,6 +16,12 @@ module RMyBackup
   end
 
   def self.purge_number(path,number=false)
-    #Only keep x backups
+    return true unless number
+    all_files = Dir[File.join(path,"*.gz")].sort_by {|f| File.mtime(f)}.reverse
+    keep = all_files[0..number - 1]
+    remove = all_files - keep
+    remove.each do |f|
+      File.delete f
+    end
   end
 end

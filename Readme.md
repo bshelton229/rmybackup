@@ -33,7 +33,14 @@ The default location for the configuration file is /etc/rmybackup.conf then ~/.r
 
     ---
     backup_dir: /Users/username/mysql_backups/
+    
+    #Pruning. Remove_after is evaluated first, then only_keep
+
+    #Remove after x days
     remove_after: 7
+
+    #Only keep x number
+    only_keep: 5
 
     #Database
     username: root
