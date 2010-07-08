@@ -11,13 +11,11 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/bshelton229/rmybackup/"
   s.description = "Ruby mysql backup script, the script uses mysqldump from the system"
   s.executables = ["rmybackup"]
-  s.files = [
-    "lib/rmybackup.rb",
-    "Readme.md",
-    "lib/rmybackup/config_file.txt",
-    "lib/rmybackup/install_config.rb",
-    "lib/rmybackup/purge_files.rb"
-  ]
+  s.files = Dir['Readme.md','lib/**/*','bin/*']
   s.require_path = "lib"
+  
+  s.required_ruby_version     = '>= 1.8.7'
+  s.required_rubygems_version = ">= 1.3.6"
+
   s.add_dependency("mysql")
 end
