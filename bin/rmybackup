@@ -34,6 +34,9 @@ ARGV.options do |opts|
   opts.parse!
 end
 
+#The first remaining ARGV, we'll take as a command
+command = ARGV.shift
+
 #Load up the config file. This will exit 1 if the config file can't be found
 RMyBackup::Base.load_config(options[:config_file])
 

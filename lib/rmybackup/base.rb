@@ -27,6 +27,22 @@ module RMyBackup
           @config['mysqldump_command'] = `which mysqldump`.chop
         end
         
+
+        #Sanitize and check our PUSH options
+        if not @config['push'].nil?
+          #Turn this into an array, even if there is only one in the config file
+          @config['push'] = Array.new << @config['push'] if not @config['push'].kind_of? Array
+
+          #Because we have a push defined, lets find the rsync command
+          if @config['rsync_command'].nil?
+            @config['rsync_command'] = `which rsync`.chop
+          end
+          
+          @error << "Can't locate rsync command: #{@config['rsync_command']}" unless File.exists? @config['rsync_command']          
+        else
+          @config['push'] = false
+        end
+        
         #Check that commands exist
         @error << "Can't locate gzip command: #{@config['gzip_command']}" unless File.exists? @config['gzip_command']
         @error << "Can't locate mysqldump command: #{@config['mysqldump_command']}" unless File.exists? @config['mysqldump_command']
@@ -45,11 +61,13 @@ module RMyBackup
         @config['password'] = @config['password'] || false
         @config['host'] = @config['host'] || false
 
+
         #Backup dir validation
+        @config['backup_dir'] = File.expand_path @config['backup_dir']
+        
         if not File.directory? @config['backup_dir']
           @error << "No Such Backup Directory #{@config['backup_dir']}"
         else
-          @config['backup_dir'] = File.expand_path @config['backup_dir']
           if not File.writable? @config['backup_dir']
             @error << "Can't write to the backup directory - #{@config['backup_dir']}"
           end

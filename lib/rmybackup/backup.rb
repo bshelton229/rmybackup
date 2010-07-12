@@ -31,6 +31,9 @@ module RMyBackup
         RMyBackup.purge_days(backup_dir,@config['remove_after'])
         RMyBackup.purge_number(backup_dir,@config['only_keep'])
       end
+      
+      #If we need to push the dir, push it here
+      RMyBackup::Push.run if @config['push']
     end
     
     #Get Databases from MySQL
