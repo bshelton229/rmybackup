@@ -31,4 +31,45 @@ module RMyBackup
     end
     exit 0
   end
+  
+  #Edit config Options
+  def self.editor
+    editor = `echo $EDITOR`.chop
+    if editor.empty?
+      vim = `which vim`.chop
+      if vim.empty?
+        return false
+      else
+        return vim
+      end
+    else
+      return editor
+    end
+  end
+  
+  def self.list_config_file
+    if editor
+      config = RMyBackup::Base.get_config
+      file = config['file']
+      puts "Showing config file - #{file}:\n\n"
+      File.open(file, "r") do |infile|
+        while(line = infile.gets)
+          puts line
+        end
+      end
+    else
+      puts "Can't locate vim and $EDITOR isn't set"
+      exit 1
+    end
+  end
+  
+  def self.edit_config_file
+    config = RMyBackup::Base.get_config
+    if editor
+      exec "#{editor} #{config['file']}"
+    else
+      puts "Can't locate vim and $EDITOR isn't set"
+      exit 1
+    end
+  end
 end

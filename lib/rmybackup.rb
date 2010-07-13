@@ -17,7 +17,6 @@ end
 if __FILE__ == $0
   RMyBackup::Base.load_config "~/.rmybackup.conf"
   #puts RMyBackup::Base.get_config['push'].count
-  if RMyBackup::Base.config_set?
-    puts RMyBackup::Base.get_config['file']
-  end
+  #puts RMyBackup.list_config_file
+  RMyBackup.edit_config_file
 end

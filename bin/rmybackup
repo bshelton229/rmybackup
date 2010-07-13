@@ -12,6 +12,10 @@ else
   options = { :config_file => "/etc/rmybackup.conf" }
 end
 
+#Default edit or list options to false
+options[:edit] = false
+options[:list] = false
+
 gem_version = RMyBackup::GEM_VERSION
 
 #Process the command line arguments
@@ -31,6 +35,16 @@ ARGV.options do |opts|
     exit 0
   end
   
+  opts.on("-l","--list","Lists the configuration file") {
+    #Set the list option to true
+    options[:list] = true
+  }
+  
+  opts.on("-e","--edit","Edit the configuration file in vim, or the editor defined by the system variable $EDITOR") {
+    #Set the list option to true
+    options[:edit] = true
+  }
+  
   opts.parse!
 end
 
@@ -39,6 +53,17 @@ command = ARGV.shift
 
 #Load up the config file. This will exit 1 if the config file can't be found
 RMyBackup::Base.load_config(options[:config_file])
+
+#Evaluate edit or list options
+if options[:list]
+  RMyBackup.list_config_file
+  exit 0
+end
+
+if options[:edit]
+  RMyBackup.edit_config_file
+  exit 0
+end
 
 #Run the backups
 RMyBackup::Backup.run
