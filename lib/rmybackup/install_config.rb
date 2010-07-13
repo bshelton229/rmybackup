@@ -51,12 +51,13 @@ module RMyBackup
     if editor
       config = RMyBackup::Base.get_config
       file = config['file']
-      puts "Showing config file - #{file}:\n\n"
+      puts "\nShowing config file - #{file}:\n"
       File.open(file, "r") do |infile|
         while(line = infile.gets)
           puts line
         end
       end
+      puts "\n"
     else
       puts "Can't locate vim and $EDITOR isn't set"
       exit 1
