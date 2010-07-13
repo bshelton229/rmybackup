@@ -16,5 +16,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version     = '>= 1.8.7'
   s.required_rubygems_version = ">= 1.3.6"
 
-  s.add_dependency("mysql")
+  s.add_dependency "mysql"
+  
+  s.add_development_dependency "rspec"
 end

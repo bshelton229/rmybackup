@@ -34,8 +34,7 @@ module RMyBackup
   
   #Edit config Options
   def self.editor
-    editor = `echo $EDITOR`.chop
-    if editor.empty?
+    if ENV['EDITOR'].nil?
       vim = `which vim`.chop
       if vim.empty?
         return false
@@ -43,7 +42,7 @@ module RMyBackup
         return vim
       end
     else
-      return editor
+      return ENV['EDITOR']
     end
   end
   
