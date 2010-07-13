@@ -19,8 +19,18 @@ use_mycnf_credentials: false
 #Databases to back up
 skip_databases: [ mysql, test, information_schema ]
 
+
+#RMyBackup will use Rsync to push to the Rsync compatible URI's listed in push:. This can be a single value or a list.
+
+#push: [ "username@server:/directory/for/backups", "another_user@another_server:/directory/for/backups" ]
+
+
 #Command Locations
-#You can override where to find the needed system commands, default locations are prefixed with /usr/bin/
+#You can override where to find the needed system commands
+#RMyBackup will locate these files if they are not specified here
 
 #mysqldump_command: /usr/local/mysql/bin/mysqldump
 #gzip_command: /usr/bin/gzip
+
+#Rsync, only needed if you designate pushes
+#rsync_command: /usr/bin/rsync

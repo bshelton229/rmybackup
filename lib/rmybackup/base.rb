@@ -14,6 +14,9 @@ module RMyBackup
 
         #Load the YAML file
         @config = YAML::load(File.open(file))
+
+        #Cache the expanded file we read
+        @config['file'] = file
         
         #Initialize error array
         @error = Array.new 
@@ -83,6 +86,11 @@ module RMyBackup
 
       end
       
+      def config_set?
+        return true if @config
+        false
+      end
+
       def get_config
 
         #Check to make sure the configuration file has already been loaded

@@ -13,3 +13,11 @@ require File.expand_path('../rmybackup/push',__FILE__)
 module RMyBackup
   GEM_VERSION = "0.4.0"
 end
+
+if __FILE__ == $0
+  RMyBackup::Base.load_config "~/.rmybackup.conf"
+  #puts RMyBackup::Base.get_config['push'].count
+  if RMyBackup::Base.config_set?
+    puts RMyBackup::Base.get_config['file']
+  end
+end

@@ -5,6 +5,7 @@ module RMyBackup
         #Load the config options
         @config = RMyBackup::Base.get_config
         
+        puts "COUNT - #{@config['push'].count}"
         #Iterrate through the pushes in the @config options
         @config['push'].each do |push|
           #Define the rsync_command from the @config option
@@ -14,7 +15,7 @@ module RMyBackup
           push += "/" if push[-1,1] != "/"
           
           puts "\nPushing to : #{push} -->\n\n"
-          exec "#{rsync_command} -rv --delete #{@config['backup_dir']}/ #{push}"
+          system "#{rsync_command} -r --delete #{@config['backup_dir']}/ #{push}"
         end
         
       end
