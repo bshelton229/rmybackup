@@ -14,7 +14,7 @@ module RMyBackup
           push += "/" if push[-1,1] != "/"
           
           puts "\nPushing to : #{push} -->\n\n"
-          system "#{rsync_command} -rz --delete #{@config['backup_dir']}/ #{push}"
+          system "#{rsync_command} -rtz --delete #{@config['backup_dir']}/ #{push}"
         end
         
       end
