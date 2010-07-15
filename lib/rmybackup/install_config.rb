@@ -52,6 +52,7 @@ module RMyBackup
       #See if the config file exists
       if not File.exists? file
         puts "The config file cannot be found: #{file}"
+        exit 1
       end
       
       puts "Showing config file - #{file}:\n"
@@ -71,6 +72,7 @@ module RMyBackup
     #See if the config file exists
     if not File.exists? file
       puts "The config file cannot be found: #{file}"
+      exit 1
     end
 
     if editor

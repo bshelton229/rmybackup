@@ -1,3 +1,6 @@
+## 0.3.7
+  - Exit with 1 now if the config file we're trying to --list or --edit doesn't exist
+
 ## 0.3.6
   - The config file is no longer validated before --list and --edit, so you can --edit and --list the example file installed with --install
   - Fixed detecting whether or not we can write to /etc/rmybackup.conf when sudo rmybackup --install is run

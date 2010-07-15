@@ -11,5 +11,5 @@ require File.expand_path('../rmybackup/push',__FILE__)
 
 #Set the version
 module RMyBackup
-  GEM_VERSION = "0.3.6"
+  GEM_VERSION = "0.3.7"
 end

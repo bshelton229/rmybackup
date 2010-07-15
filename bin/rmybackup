@@ -59,7 +59,7 @@ if options[:list]
 end
 
 if options[:edit]
-  RMyBackup.edit_config_file(File.expand_path(config_file))
+  RMyBackup.edit_config_file(File.expand_path(options[:config_file]))
   exit 0
 end
 
