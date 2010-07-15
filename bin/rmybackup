@@ -51,19 +51,21 @@ end
 #The first remaining ARGV, we'll take as a command
 command = ARGV.shift
 
-#Load up the config file. This will exit 1 if the config file can't be found
-RMyBackup::Base.load_config(options[:config_file])
 
 #Evaluate edit or list options
 if options[:list]
-  RMyBackup.list_config_file
+  RMyBackup.list_config_file(File.expand_path(options[:config_file]))
   exit 0
 end
 
 if options[:edit]
-  RMyBackup.edit_config_file
+  RMyBackup.edit_config_file(File.expand_path(config_file))
   exit 0
 end
+
+#Load up the config file. This will exit 1 if the config file can't be found
+RMyBackup::Base.load_config(options[:config_file])
+
 
 #Run the backups
 RMyBackup::Backup.run

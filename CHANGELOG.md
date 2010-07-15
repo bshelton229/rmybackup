@@ -1,3 +1,7 @@
+## 0.3.6
+  - The config file is no longer validated before --list and --edit, so you can --edit and --list the example file installed with --install
+  - Fixed detecting whether or not we can write to /etc/rmybackup.conf when sudo rmybackup --install is run
+
 ## 0.3.5
 
   - You can now set push URIs in the config file. They can be either a single value or a list (array). RMyBackup will attemp to rsync the backup directory to each push URI after backups have completed.

@@ -3,7 +3,7 @@ module RMyBackup
   def self.install_config(file=false)
     #Default the file location
     if not file
-      if File.writable_real?("/etc/rmybackup.conf")
+      if File.writable_real?("/etc/")
         file = "/etc/rmybackup.conf"
       else
         file = "~/.rmybackup.conf"
@@ -46,10 +46,14 @@ module RMyBackup
     end
   end
   
-  def self.list_config_file
+  def self.list_config_file(file)
     if editor
-      config = RMyBackup::Base.get_config
-      file = config['file']
+
+      #See if the config file exists
+      if not File.exists? file
+        puts "The config file cannot be found: #{file}"
+      end
+      
       puts "Showing config file - #{file}:\n"
       File.open(file, "r") do |infile|
         while(line = infile.gets)
@@ -62,10 +66,15 @@ module RMyBackup
     end
   end
   
-  def self.edit_config_file
-    config = RMyBackup::Base.get_config
+  def self.edit_config_file(file)
+
+    #See if the config file exists
+    if not File.exists? file
+      puts "The config file cannot be found: #{file}"
+    end
+
     if editor
-      exec "#{editor} #{config['file']}"
+      exec "#{editor} #{file}"
     else
       puts "Can't locate vim and $EDITOR isn't set"
       exit 1
