@@ -59,7 +59,7 @@ The default location for the configuration file is /etc/rmybackup.conf then ~/.r
     #If use_mycnf_credentials is set to true, no --user --password or --host switches will be passed to mysqldump
     use_mycnf_credentials: false
 
-    #Databases to back up
+    #Databases to not back up
     skip_databases: [ mysql, test, information_schema ]
 
 
