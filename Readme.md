@@ -1,3 +1,5 @@
+# This branch is currently unstable, use the v0.3.x branch for the stable build
+
 # RMyBackup
 
 RMyBackup was created to solve a simple problem I had, and is hopefully useful to somebody else out there. RMyBackup is a quick way to backup up your mysql databases using mysqldump. It writes a gzipped .sql file using a date/time naming convention to a specified directory.

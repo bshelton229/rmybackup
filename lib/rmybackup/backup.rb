@@ -36,15 +36,19 @@ module RMyBackup
       RMyBackup::Push.run if @config['push']
     end
     
+    private
+    
     #Get Databases from MySQL
     def self.get_databases
-      dbc = Mysql.real_connect(@config['host'],@config['username'],@config['password'])
-      res = dbc.query('SHOW DATABASES;')
-      databases = []
-      res.each_hash do |db|
-        databases << db['Database']
-      end
-      return databases - @config['skip_databases']
+      # dbc = Mysql.real_connect(@config['host'],@config['username'],@config['password'])
+      # res = dbc.query('SHOW DATABASES;')
+      # databases = []
+      # res.each_hash do |db|
+      #   databases << db['Database']
+      # end
+      # return databases - @config['skip_databases']
+      mysql_client = Mysql2::Client.new(:host => @config['host'], :username => @config['username'], :password => @config['password'])
+      mysql_client.query("SHOW DATABASES").each(:symbolize_keys => true).collect {|db| db[:Database] } - @config['skip_databases']
     rescue
       puts "There was a problem connecting to the mysql server"
       exit 0
