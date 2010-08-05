@@ -1,5 +1,11 @@
 module RMyBackup
+
+  #The backup class handles the running of the mysqldump command and gets the list
+  #of databases
+  
   class Backup
+
+    #The main method of the Backup class
     def self.run
 
       #This will exit out if RMyBackup::Base.load_config(file) hasn't been loaded with a config file yet
@@ -38,7 +44,9 @@ module RMyBackup
     
     private
     
-    #Get Databases from MySQL
+    #Get the databases from the mysql server, less the databases in the skip_databases definition 
+    #in the config files
+
     def self.get_databases
       # dbc = Mysql.real_connect(@config['host'],@config['username'],@config['password'])
       # res = dbc.query('SHOW DATABASES;')
