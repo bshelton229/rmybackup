@@ -46,16 +46,16 @@ module RMyBackup
     
     #Get the databases from the mysql server, less the databases in the skip_databases definition 
     #in the config files
-
     def self.get_databases
-      # dbc = Mysql.real_connect(@config['host'],@config['username'],@config['password'])
-      # res = dbc.query('SHOW DATABASES;')
-      # databases = []
-      # res.each_hash do |db|
-      #   databases << db['Database']
-      # end
-      # return databases - @config['skip_databases']
-      mysql_client = Mysql2::Client.new(:host => @config['host'], :username => @config['username'], :password => @config['password'])
+      
+      #Connect with Mysql2
+      mysql_client = Mysql2::Client.new(
+        :host => @config['host'], 
+        :username => @config['username'], 
+        :password => @config['password']
+      )
+      
+      #Run the query and remove the skipped databases, this will return
       mysql_client.query("SHOW DATABASES").each(:symbolize_keys => true).collect {|db| db[:Database] } - @config['skip_databases']
     rescue
       puts "There was a problem connecting to the mysql server"
