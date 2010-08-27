@@ -3,11 +3,7 @@ require 'time'
 require 'mysql2'
 
 #Load our libraries
-require File.expand_path('../rmybackup/install_config',__FILE__)
-require File.expand_path('../rmybackup/purge_files',__FILE__)
-require File.expand_path('../rmybackup/base',__FILE__)
-require File.expand_path('../rmybackup/backup',__FILE__)
-require File.expand_path('../rmybackup/push',__FILE__)
+Dir[File.expand_path('../rmybackup/*.rb',__FILE__)].each {|file| require file }
 
 #Set the version
 module RMyBackup
