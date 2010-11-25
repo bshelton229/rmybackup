@@ -5,6 +5,8 @@ require 'rubygems'
 require 'rmybackup'
 require 'optparse'
 
+### MOVE ALL OF THIS SOMEWHERE ELSE ###
+
 #Default to local config file if it exists
 if File.exists?(File.expand_path("~/.rmybackup.conf"))
   options = { :config_file => File.expand_path("~/.rmybackup.conf") }

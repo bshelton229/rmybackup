@@ -1,5 +1,5 @@
 $:.unshift File.expand_path('../lib',__FILE__)
-require 'rmybackup'
+require 'rmybackup/version'
 
 Gem::Specification.new do |s|
   s.name = "rmybackup"
