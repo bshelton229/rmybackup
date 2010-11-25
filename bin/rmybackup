@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
-#Load our libraries, if we can't load them from the gem, assume we're running from source
-require 'rubygems'
+# Load the app
 require 'rmybackup'
 
 RMyBackup::Cli.run
