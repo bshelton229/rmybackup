@@ -1,3 +1,6 @@
+## 0.4.0
+  - Using the mysql2 gem instead of the mysql gem to get the list of databases
+  
 ## 0.3.7
   - Exit with 1 now if the config file we're trying to --list or --edit doesn't exist
 
