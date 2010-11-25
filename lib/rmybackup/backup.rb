@@ -15,8 +15,7 @@ module RMyBackup
       mysql_dump = @config['mysqldump_command']
       backup_root = @config['backup_dir']
       gzip = @config['gzip_command']
-      date_string = Time.now.strftime "%m_%d_%Y_%H_%M"
-
+      date_string = Time.now.strftime "%Y_%m_%d_%H_%M"
       
       #Cycle through databases to backup
       get_databases.each do |db|
