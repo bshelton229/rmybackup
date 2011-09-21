@@ -5,6 +5,5 @@ describe RMyBackup, "#editor" do
   it "should return the editor set in ENV" do
     ENV['EDITOR'] = "/usr/local/bin/mate"
     RMyBackup.editor.should == "/usr/local/bin/mate"
-    puts RMyBackup.editor
   end
 end
