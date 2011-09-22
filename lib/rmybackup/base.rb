@@ -1,9 +1,13 @@
 module RMyBackup
   class Base
     class << self
+      
+      # Hold the database get method
+      attr_accessor :get_databases_via
+
       #Load the configuration from the file
       def load_config(file)
-
+        
         #Expand the file path
         file = File.expand_path(file)
         
