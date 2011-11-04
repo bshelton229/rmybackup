@@ -3,6 +3,7 @@ $:.unshift File.expand_path('../lib',__FILE__)
 require 'rmybackup'
 require 'rubygems'
 require 'rspec/core/rake_task'
+require "bundler/gem_tasks"
 
 # Load the rpsec rake tasks
 RSpec::Core::RakeTask.new do |t|
