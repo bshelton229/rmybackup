@@ -9,10 +9,10 @@ module RMyBackup
         file = "~/.rmybackup.conf"
       end
     end
-    
+
     #Expand the path
     file = File.expand_path(file)
-    
+
     if File.exists? file
       puts "#{file} already exists, do you want to overwrite it? (Y/n):"
       STDOUT.flush
@@ -21,7 +21,7 @@ module RMyBackup
     end
 
     #Read Sample Config File
-    config_file = File.read(File.expand_path("../../rmybackup/config_file.txt",__FILE__))
+    config_file = File.read(File.expand_path("../../rmybackup/templates/config_file.txt",__FILE__))
 
     begin
       File.open(file,'w') {|f| f.write(config_file) }
@@ -31,7 +31,7 @@ module RMyBackup
     end
     exit 0
   end
-  
+
   #Edit config Options
   def self.editor
     if ENV['EDITOR'].nil?
@@ -45,7 +45,7 @@ module RMyBackup
       return ENV['EDITOR']
     end
   end
-  
+
   def self.list_config_file(file)
     if editor
 
@@ -54,7 +54,7 @@ module RMyBackup
         puts "The config file cannot be found: #{file}"
         exit 1
       end
-      
+
       puts "Showing config file - #{file}:\n"
       File.open(file, "r") do |infile|
         while(line = infile.gets)
@@ -66,7 +66,7 @@ module RMyBackup
       exit 1
     end
   end
-  
+
   def self.edit_config_file(file)
 
     #See if the config file exists
