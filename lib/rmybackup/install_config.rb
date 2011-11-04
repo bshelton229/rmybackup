@@ -21,7 +21,7 @@ module RMyBackup
     end
 
     #Read Sample Config File
-    config_file = File.read(File.expand_path("../../rmybackup/templates/config_file.txt",__FILE__))
+    config_file = File.read(File.expand_path("../templates/config_file.txt", __FILE__))
 
     begin
       File.open(file,'w') {|f| f.write(config_file) }
