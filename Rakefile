@@ -20,7 +20,7 @@ end
 #Version
 desc "Show Version"
 task :version do
-  puts RMyBackup::GEM_VERSION
+  puts RMyBackup::VERSION
 end
 
 task :default => :spec
