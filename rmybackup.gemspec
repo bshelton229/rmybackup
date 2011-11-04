@@ -3,7 +3,7 @@ require 'rmybackup/version'
 
 Gem::Specification.new do |s|
   s.name = "rmybackup"
-  s.version = RMyBackup::GEM_VERSION
+  s.version = RMyBackup::VERSION
   s.authors = ["Bryan Shelton"]
   s.email = "bryan@sheltonopensolutions.com"
   s.summary = "Ruby Mysql Backup Script"

@@ -14,17 +14,15 @@ module RMyBackup
       options[:edit] = false
       options[:list] = false
 
-      gem_version = RMyBackup::GEM_VERSION
-
       #Process the command line arguments
       ARGV.options do |opts|
         #Set the config file
-        opts.on("-f /etc/rmybackup.conf","--config-file /etc/rmybackup.conf","Set Config File",String) do |o| 
-          options[:config_file] = o 
+        opts.on("-f /etc/rmybackup.conf","--config-file /etc/rmybackup.conf","Set Config File",String) do |o|
+          options[:config_file] = o
         end
 
         #Version
-        opts.on("-v","--version","Outputs version") { puts "Version - #{gem_version}"; exit }
+        opts.on("-v","--version","Outputs version") { puts "Version - #{RMyBackup::VERSION}"; exit }
 
         #Allow the user to write the sample config file to either the default (no file specified) or to the file they specify
         #on the command line
@@ -67,7 +65,7 @@ module RMyBackup
 
       #Run the backups
       RMyBackup::Backup.run
-      
+
     end
   end
 end
