@@ -1,5 +1,4 @@
-$:.unshift File.expand_path('../../lib',__FILE__)
-require 'rmybackup'
+require File.expand_path('../spec_helper',__FILE__)
 
 # $BUNDLE_GEMFILE can set the gemfile to set up a better test
 

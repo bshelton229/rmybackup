@@ -1,4 +1,3 @@
-require 'yaml'
 require 'time'
 
 #Load our libraries
