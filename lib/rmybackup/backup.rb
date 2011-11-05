@@ -11,7 +11,7 @@ module RMyBackup
         Dir.mkdir(backup_dir) if not File.exists?(backup_dir)
         puts "Backing up #{db}\n"
         command = @config.backup_command(db)
-        system command
+        %x(#{command})
         #Purge after x days
         RMyBackup::Purge.days(db)
         RMyBackup::Purge.number(db)

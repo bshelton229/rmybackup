@@ -1,4 +1,13 @@
 #!/usr/bin/env ruby
 
 require 'rmybackup'
-RMyBackup::Cli.run
+
+begin
+  RMyBackup::Cli.run
+rescue Interrupt => e
+  puts "\nQuitting..."
+  puts e.backtrace.join("\n")
+  exit 1
+rescue SystemExit => e
+  exit e.status
+end
