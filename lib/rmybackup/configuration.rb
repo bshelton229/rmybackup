@@ -19,9 +19,9 @@ module RMyBackup
 
     # Load the configuration from disk
     def initialize(opts={})
-      local_config = File.expand_path("~/.rmybackup.conf")
-      central_config = "/etc/rmybackup.conf"
-      file = opts[:file] || ( File.exist?(local_config) ? local_config : central_config )
+      # Find the appropriate config file
+      file = opts[:file] || find_config
+      raise "Couldn't find a suitable config file" if not file
       @file = File.expand_path(file)
       if not File.exist? file
         raise "Can't load the config file #{file}"
@@ -50,7 +50,7 @@ module RMyBackup
       }
     end
 
-    # Build a connection hash for
+    # Build a connection hash for the database drivers
     def connection_hash
       out = { :username => @username, :password => @password }
       if @socket
@@ -61,6 +61,8 @@ module RMyBackup
       out
     end
 
+    # Build the mysqldump command line argument list
+    # to be appended to the backup_command
     def args
       args = Array.new
       # Add command line authentication args if we're not
@@ -87,11 +89,14 @@ module RMyBackup
       "#{@bin[:mysqldump]}#{args} #{db} |#{@bin[:gzip]} > #{backup_dir}/#{db}_#{date_string}.sql.gz"
     end
 
+    # Return the backup directory for a particular database
     def db_backup_dir(db)
       File.expand_path("#{@backup_dir}/#{db}")
     end
-    
+
     private
+    # Set the @push instance variable
+    # Do several checks first
     def set_push
       @push = Array.new
       @config['push'] = (Array.new << @config['push']) if @config['push'].kind_of?(String)
@@ -103,6 +108,17 @@ module RMyBackup
           @push << push
         end
       end
+    end
+
+    # Find a configuration file
+    def find_config
+      # Search for configuration files in this order
+      try_files = %w(~/.rmybackup.yml ~/.rmybackup.conf /etc/rmybackup.yml /etc/rmybackup.conf)
+      try_files.each do |f|
+        file = File.expand_path(f)
+        return file if File.exist?(file)
+      end
+      false
     end
   end
 end
