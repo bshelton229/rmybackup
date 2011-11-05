@@ -1,6 +1,4 @@
 #!/usr/bin/env ruby
 
-# Load the app
 require 'rmybackup'
-
 RMyBackup::Cli.run

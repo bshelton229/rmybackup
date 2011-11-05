@@ -1,65 +1,43 @@
 module RMyBackup
-
-  #The backup class handles the running of the mysqldump command and gets the list
-  #of databases
-  
   class Backup
-
     #The main method of the Backup class
     def self.run
-
-      #This will exit out if RMyBackup::Base.load_config(file) hasn't been loaded with a config file yet
-      @config = RMyBackup::Base.get_config
-
+      # Load the straight config from the base instance
+      @config = RMyBackup::Configuration.instance
       #Grab some config variables
-      mysql_dump = @config['mysqldump_command']
-      backup_root = @config['backup_dir']
-      gzip = @config['gzip_command']
+      backup_root = @config.backup_dir
       date_string = Time.now.strftime "%Y_%m_%d_%H_%M"
-      
       #Cycle through databases to backup
       get_databases.each do |db|
-        backup_dir = File.expand_path("#{backup_root}/#{db}")
+        # Handle the backup directory creation
+        backup_dir = @config.db_backup_dir(db)
         Dir.mkdir(backup_dir) if not File.exists?(backup_dir)
-
-        #Decide if we use my.cnf or creds on cli
-        if @config['use_mycnf_credentials']
-          cred_string = ''
-        else
-          cred_string = " --user=#{@config['username']} --password=#{@config['password']} --host=#{@config['host']}"
-        end
-        
         puts "Backing up #{db}\n"
-        system "#{mysql_dump}#{cred_string} #{db} |#{gzip} > #{backup_dir}/#{db}_#{date_string}.sql.gz"
-        
+        command = @config.backup_command(db)
+        system command
+
         #Purge after x days
-        RMyBackup.purge_days(backup_dir,@config['remove_after'])
-        RMyBackup.purge_number(backup_dir,@config['only_keep'])
+        #RMyBackup.purge_days(backup_dir, @config['remove_after'])
+        #RMyBackup.purge_number(backup_dir,@config['only_keep'])
       end
-      
+
       #If we need to push the dir, push it here
-      RMyBackup::Push.run if @config['push']
+      #RMyBackup::Push.run if @config['push']
     end
-    
+
     private
-    
-    #Get the databases from the mysql server, less the databases in the skip_databases definition 
+
+    #Get the databases from the mysql server, less the databases in the skip_databases definition
     #in the config files
     def self.get_databases
-      
-      #Connect with Mysql2
-      mysql_client = Mysql2::Client.new(
-        :host => @config['host'], 
-        :username => @config['username'], 
-        :password => @config['password']
-      )
-      
+      @config ||= RMyBackup::Configuration.instance
+      # Connection
+      mysql_client = Mysql2::Client.new(@config.connection_hash)
       #Run the query and remove the skipped databases, this will return
-      mysql_client.query("SHOW DATABASES").each(:symbolize_keys => true).collect {|db| db[:Database] } - @config['skip_databases']
+      mysql_client.query("SHOW DATABASES").each(:symbolize_keys => true).collect {|db| db[:Database] } - @config.skip_databases
     rescue
       puts "There was a problem connecting to the mysql server"
-      exit 0
+      exit 1
     end
-    
   end
 end

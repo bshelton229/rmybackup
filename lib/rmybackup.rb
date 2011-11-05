@@ -1,12 +1,14 @@
 require 'time'
+require 'yaml'
 require 'rmybackup/install_config'
 require 'rmybackup/purge_files'
 require 'rmybackup/push'
+require 'rmybackup/version'
 
 #Load our libraries
 module RMyBackup
   autoload :Base,           'rmybackup/base'
-  autoload :Backup,         'rmybacukp/backup'
+  autoload :Backup,         'rmybackup/backup'
   autoload :Cli,            'rmybackup/cli'
   autoload :Configuration,  'rmybackup/configuration'
   autoload :Push,           'rmybackup/push'
