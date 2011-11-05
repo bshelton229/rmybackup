@@ -4,9 +4,6 @@ module RMyBackup
     def self.run
       # Load the straight config from the base instance
       @config = RMyBackup::Configuration.instance
-      #Grab some config variables
-      backup_root = @config.backup_dir
-      date_string = Time.now.strftime "%Y_%m_%d_%H_%M"
       #Cycle through databases to backup
       get_databases.each do |db|
         # Handle the backup directory creation
