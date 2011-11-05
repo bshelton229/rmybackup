@@ -15,7 +15,7 @@ module RMyBackup
     end
 
     # Reading is good for you
-    attr_reader :file, :config, :host, :socket, :username, :password, :backup_dir, :skip_databases, :push, :bin, :options
+    attr_reader :file, :config, :host, :socket, :username, :password, :backup_dir, :skip_databases, :push, :purge, :bin, :options
 
     # Load the configuration from disk
     def initialize(opts={})
@@ -32,7 +32,7 @@ module RMyBackup
       @host = @config['host']
       @username = @config['username']
       @password = @config['password']
-      @backup_dir = @config['backup_dir']
+      @backup_dir = @config['backup_dir'] ? File.expand_path(@config['backup_dir']) : nil
       @socket = @config['socket']
       # TODO: Validate skip_databases and push
       @skip_databases = @config['skip_databases'] || Array.new
@@ -47,6 +47,11 @@ module RMyBackup
       # Miscelaneous other options
       @options = {
         :use_mycnf_credentials => @config['use_mycnf_credentials'] || false
+      }
+      # Purge options
+      @purge = {
+        :remove_after => @config['remove_after'] || false,
+        :only_keep => @config['only_keep'] || false
       }
     end
 

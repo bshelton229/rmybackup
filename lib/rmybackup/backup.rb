@@ -16,8 +16,8 @@ module RMyBackup
         command = @config.backup_command(db)
         system command
         #Purge after x days
-        #RMyBackup.purge_days(backup_dir, @config['remove_after'])
-        #RMyBackup.purge_number(backup_dir,@config['only_keep'])
+        RMyBackup::Purge.days(db)
+        RMyBackup::Purge.number(db)
       end
       #If we need to push the dir, push it here
       RMyBackup::Push.run if not @config.push.empty?
