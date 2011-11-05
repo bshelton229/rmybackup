@@ -15,7 +15,7 @@ module RMyBackup
     end
 
     # Reading is good for you
-    attr_reader :file, :config, :host, :socket, :username, :password, :backup_dir, :skip_databases, :bin, :options
+    attr_reader :file, :config, :host, :socket, :username, :password, :backup_dir, :skip_databases, :push, :bin, :options
 
     # Load the configuration from disk
     def initialize(opts={})
@@ -34,8 +34,10 @@ module RMyBackup
       @password = @config['password']
       @backup_dir = @config['backup_dir']
       @socket = @config['socket']
-      # TODO: validate that this is an array
-      @skip_databases = @config['skip_databases']
+      # TODO: Validate skip_databases and push
+      @skip_databases = @config['skip_databases'] || Array.new
+      # Run the private method to set @push
+      set_push
       # Binaries
       @bin = {
         :mysqldump => @config['mysqldump_command'] || 'mysqldump',
@@ -87,6 +89,20 @@ module RMyBackup
 
     def db_backup_dir(db)
       File.expand_path("#{@backup_dir}/#{db}")
+    end
+    
+    private
+    def set_push
+      @push = Array.new
+      @config['push'] = (Array.new << @config['push']) if @config['push'].kind_of?(String)
+      if @config['push']
+        @config['push'].each do |push|
+          push.gsub!(/\s+$/, '')
+          push.gsub!(/^\s+/, '')
+          push << "/" if not push.match /\/$/
+          @push << push
+        end
+      end
     end
   end
 end

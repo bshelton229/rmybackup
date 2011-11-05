@@ -23,8 +23,9 @@ skip_databases: [ mysql, test, information_schema ]
 
 #RMyBackup will use Rsync to push to the Rsync compatible URI's listed in push:. This can be a single value or a list.
 
-#push: [ "username@server:/directory/for/backups", "another_user@another_server:/directory/for/backups" ]
-
+# push:
+#   - username@server:/directory/for/backups
+#   - another_user@another_server:/directory/for/backups
 
 #Command Locations
 #You may override where to find the needed system commands

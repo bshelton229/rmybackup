@@ -22,4 +22,3 @@ rescue LoadError
   require 'mysql'
   RMyBackup::Base.get_databases_via = 'mysql'
 end
-
