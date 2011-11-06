@@ -9,13 +9,6 @@ RSpec::Core::RakeTask.new do |t|
   t.pattern = 'spec/**/*.rb'
 end
 
-#Run the backups using the config file in your home folder
-desc "Run Backups"
-task :run_backups do
-  RMyBackup::Base.load_config(File.expand_path("~/.rmybackup.conf"))
-  RMyBackup::Backup.run
-end
-
 #Version
 desc "Show Version"
 task :version do

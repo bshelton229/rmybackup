@@ -15,7 +15,7 @@ module RMyBackup
     end
 
     # Reading is good for you
-    attr_reader :file, :config, :host, :socket, :username, :password, :backup_dir, :skip_databases, :push, :purge, :bin, :options
+    attr_reader :file, :config, :host, :socket, :port, :username, :password, :backup_dir, :skip_databases, :push, :purge, :bin, :options
 
     # Load the configuration from disk
     def initialize(opts={})
@@ -29,7 +29,8 @@ module RMyBackup
       # Load the raw processed yaml into the cnofig instance variable
       @config = YAML::load(File.open(@file))
       # Set class variables
-      @host = @config['host']
+      @host = @config['socket'] ? nil : @config['host']
+      @port = @config['port']
       @username = @config['username']
       @password = @config['password']
       @backup_dir = @config['backup_dir'] ? File.expand_path(@config['backup_dir']) : nil
@@ -82,6 +83,7 @@ module RMyBackup
         else
           args << "--protocol=TCP"
           args << "--host=#{@host}"
+          args << "--port=#{@port}" if @port
         end
       end
       args.empty? ? nil : " #{args.join(' ')}"
