@@ -12,11 +12,9 @@ Gem::Specification.new do |s|
   s.executables = ["rmybackup"]
   s.files = Dir['Readme.md','lib/**/*','bin/*']
   s.require_path = "lib"
-  
+
   s.required_ruby_version     = '>= 1.8.7'
   s.required_rubygems_version = ">= 1.3.6"
 
-  s.add_dependency "mysql2", ">= 0.2.3"
-  
   s.add_development_dependency "rspec"
 end
